@@ -1,0 +1,58 @@
+# Does Cerberus activate on startup?
+# If set to false, all anti cheats will be disabled regardless of their "Enabled" value
+Active-On-Start: true
+
+
+# Using these value if not specified under Anti.<CheatName>.Gui.Options
+# Values in Anti.<CheatName>.Gui.Options override the global options
+
+Global-Gui-Options:
+  Toggle-Button:
+    On:
+      Item: RED STAINED_GLASS_PANE
+    Off:
+      Item: GREEN STAINED_GLASS_PANE
+    Name: 'Toggle cheat'
+    Lore:
+    - '%flag%'
+    - Click to toggle
+
+# [LINK] https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html [LINK] #
+
+# [INFO] ORANGE, MAGENTA, LIGHT_BLUE, YELLOW, LIME, PINK, GRAY, SILVER, CYAN, PURPLE, BLUE, BROWN, GREEN, RED, BLACK [INFO]
+
+# [IMPORTANT] ITEM FORMAT (AMOUNT:COLOR:MATERIAL)
+# [IMPORTANT] 3 GREEN WOOL || GREEN STAINED_GLASS_PANE || COBBLESTONE || 2 COBBLESTONE  are all acceptable
+
+   # [WARNING] Not recommended to change the time value under Blocks [WARNING] #
+
+#   [INFO] You will have to follow in-game rules to correctly setup Cerberus speed mine check
+#   [INFO]       Cerberus will only track mining speeds on block under the Blocks section
+#   [INFO]               It is normal to see a time value of 0 on first load
+#   [INFO]                     Cerberus checks average mining speeds
+
+# Anti.Speed-Mine.Blocks FORMAT: '<Material>:<Time(Millis)>' (Servers average time it took to mine a block)
+
+Anti:
+  Speed-Mine:
+    Enabled: true
+    Gui:
+      Item: GOLD_PICKAXE
+      Name: '§6Speed Mine'
+      Lore:
+      - '§Enabled: %flag%'
+      - '§eAnti cheat for speed mine'
+    Blocks:
+    - GRASS
+    - SAND
+    - DIRT
+    - OBSIDIAN
+    - WOOD
+    - STONE
+    - COBBLESTONE
+    - DIAMOND_ORE
+    - EMERALD_ORE
+    - LAPIS_ORE
+    - IRON_ORE
+    - COAL_ORE
+    - GOLD_ORE

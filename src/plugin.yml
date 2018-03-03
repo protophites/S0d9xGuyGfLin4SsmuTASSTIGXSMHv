@@ -1,0 +1,5 @@
+name: FrontierCore
+main: me.protophite.core.Core
+version: 1.0
+author: protophite
+description: Core plugin for FrontierPvP

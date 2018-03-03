@@ -1,0 +1,30 @@
+##################################################
+#              FRONTIERCORE CONFIG               #
+##################################################
+
+#####
+### Modules --> Modules are the FrontierCore apis
+##  - Disabling one of these could effect other
+##    plugins.
+##  - A plugin depending on this core will disable
+##    if its required modules are disabled.
+##  - Some modules require storage, We recommend to
+##    use default values.
+#####
+
+# [DATASTUCTURES] || MYSQL || FLATFILE || [DATASTRUCTURES] #
+
+Modules:
+  GuiModule:
+    Enabled: true
+    Datastructure:
+
+
+
+MySQL:
+  host:
+  database:
+  username:
+  password:
+  port:
+
