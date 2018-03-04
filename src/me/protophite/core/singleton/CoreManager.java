@@ -44,7 +44,7 @@ public abstract class CoreManager {
         return singletons;
     }
 
-    protected static void init(){
+    public static void init(){
         Core instance = Core.getInstance();
 
         ResourceFile[] resrcs = {

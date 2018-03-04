@@ -17,7 +17,6 @@ public class DataManager extends CoreManager {
         private static DataManager instance = new DataManager(Core.getInstance(), new DataYAML());
     }
 
-
     private FlushRunnable flushRunnable;
     private Core instance = Core.getInstance();
 

@@ -2,10 +2,12 @@ package me.protophite.core.items;
 
 import me.protophite.core.utils.Utils;
 import me.protophite.core.messages.Messages;
+import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class ConfigItem extends ProItem {
@@ -17,51 +19,54 @@ public class ConfigItem extends ProItem {
     public ConfigItem(String fileName, ConfigurationSection item, List<String> lore, String name){
         super(getCorrectStack(fileName, item), lore, name);
     }
-
     //Assuming we are using frontier config ItemStack format (AMOUNT:COLOR:MATERIAL)
     private static ItemStack getCorrectStack(String fileName, ConfigurationSection section){
-        String path = "ERROR";
-        String m = "ERROR";
-        if(section != null){
-            m = section.getString("Item");
-            path = section.getCurrentPath() + ".Item";
-
-            Material mat = Material.getMaterial(m);
+        //TODO Error message
+        String msg = "";
+        if(section != null) {
+            String m = section.getString("Item");
+            String path = section.getCurrentPath() + ".Item";
             String[] split = m.split(":");
 
-            if(split.length == 1 && mat != null){
-                return new ItemStack(mat);
-            } else if(split.length == 2) {
+            Material mat = findMaterial(split);
+            byte data = findData(split);
+            int amount = findAmount(split);
 
-                ByteToColor color = ByteToColor.valueOf(split[0]);
-                mat = Material.getMaterial(split[1]);
-
-                if(mat != null){
-
-                    if(Utils.isNumeric(split[0])){
-                        int amount = Integer.parseInt(split[0]);
-                        if(amount > 64)amount = 64;
-                        return new ItemStack(mat, amount);
-                    } else if(color != null){
-                        return new ItemStack(mat, 1, color.getType());
-                    }
-
-                }
-            } else if(split.length == 3){
-
-                int amount = Utils.isNumeric(split[0]) ? Integer.parseInt(split[0]) : -1;
-                byte value = ByteToColor.valueOf(split[1]) != null ? ByteToColor.valueOf(split[1]).getType() : (byte)-1;
-                mat = Material.getMaterial(split[2]);
-
-                if(mat != null && amount > 0 && value > 0){
-                    if(amount > 64)amount = 64;
-                    return new ItemStack(mat, amount, value);
-                }
+            if (mat == null){
+                //TODO Error message;
+                msg = "";
+            } else if (data != -1) {
+                return new ItemStack(mat, amount, data);
+            } else {
+                return new ItemStack(mat, amount);
             }
         }
-
-        MessageHandler.log(Messages.CONFIG_ERROR_FORMAT.getColoredMsg(m, fileName, path), true);
+        //TODO Send error message
         return null;
+    }
+
+    private static Material findMaterial(String[] split){
+        for(String s : split){
+            Material ret = Material.getMaterial(s);
+            if(ret != null)return ret;
+        }
+        return null;
+    }
+    private static byte findData(String[] split){
+        for(String s : split){
+            byte ret = ByteToColor.getType(s);
+            if(ret != -1)return ret;
+        }
+        return -1;
+    }
+    private static int findAmount(String[] split){
+        for(String s : split){
+            if(Utils.isNumeric(s)){
+                int ret = Integer.parseInt(s);
+                return ret > 64 ? 64 : ret;
+            }
+        }
+        return 1;
     }
 
     public enum ByteToColor{
@@ -88,5 +93,12 @@ public class ConfigItem extends ProItem {
         }
 
         public byte getType(){return type;}
+
+        public static byte getType(String input){
+            for(ByteToColor c : ByteToColor.values()){
+                if(c.toString().equals(input))return c.getType();
+            }
+            return -1;
+        }
     }
 }

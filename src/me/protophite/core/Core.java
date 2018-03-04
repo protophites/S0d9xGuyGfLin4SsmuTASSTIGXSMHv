@@ -21,6 +21,12 @@ public class Core extends JavaPlugin implements Listener {
 
     }
 
+    public void register(Listener... listeners){
+        for(Listener l : listeners){
+            instance.getServer().getPluginManager().registerEvents(l, instance);
+        }
+    }
+
     public void onDisable(){
         //SQL.getSQL().closeConnection();
         //CoreManager.clean();

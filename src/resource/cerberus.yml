@@ -31,7 +31,7 @@ Global-Gui-Options:
 #   [INFO]               It is normal to see a time value of 0 on first load
 #   [INFO]                     Cerberus checks average mining speeds
 
-# Anti.Speed-Mine.Blocks FORMAT: '<Material>:<Time(Millis)>' (Servers average time it took to mine a block)
+# Anti.Speed-Mine.Blocks: Blocks to check for speed mine
 
 Anti:
   Speed-Mine:
